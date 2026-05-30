@@ -1,0 +1,45 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ms-api-gateway
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+
+          routes:
+            - id: bff
+              uri: lb://ms-bff
+              predicates:
+                - Path=/api/v1/bffs/**
+
+            - id: client
+              uri: lb://ms-client
+              predicates:
+                - Path=/api/v1/clients/**
+
+            - id: product
+              uri: lb://ms-product
+              predicates:
+                - Path=/api/v1/products/**
+eureka:
+  instance:
+    hostname: msvc-discovery-server
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka #http://msvc-discovery-server:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway,health

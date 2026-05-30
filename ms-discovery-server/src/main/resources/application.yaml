@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ms-discovery-server
+  config:
+    import: 'optional:configserver:http://localhost:8888' #'optional:configserver:http://msvc-config-server:8888'

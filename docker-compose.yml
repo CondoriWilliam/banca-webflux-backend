@@ -1,0 +1,182 @@
+version: "3.8"
+services:
+  #---------------------------------------------------------------------------------------------------
+  #                                    Microservice - Config Server
+  #---------------------------------------------------------------------------------------------------
+  msvc-config-server:
+    container_name: "msvc-config-server"
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - msvc_challenge
+
+  #---------------------------------------------------------------------------------------------------
+  #                                   Microservice - Discovery Server
+  #---------------------------------------------------------------------------------------------------
+  msvc-discovery-server:
+    container_name: "msvc-discovery-server"
+    build: ./discovery-server
+    ports:
+      - "8761:8761"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - msvc_challenge
+    depends_on:
+      msvc-config-server:
+        condition: service_healthy
+
+  #---------------------------------------------------------------------------------------------------
+  #                                 Microservice - Product
+  #---------------------------------------------------------------------------------------------------
+  msvc-product-db:
+    container_name: "msvc-product-db"
+    image: postgres:16
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "msvc_product"
+      POSTGRES_PASSWORD: "1234"
+    volumes:
+      - postgres_product_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d msvc_product" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - msvc_challenge
+
+  msvc-product:
+    container_name: "msvc-product"
+    build: ./microservice-product
+    ports:
+      - "9090:9090"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9090/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      DATABASE_USERNAME: "postgres"
+      DATABASE_PASSWORD: "1234"
+    depends_on:
+      msvc-config-server:
+        condition: service_healthy
+      msvc-discovery-server:
+        condition: service_healthy
+      msvc-product-db:
+        condition: service_healthy
+    networks:
+      - msvc_challenge
+
+  #---------------------------------------------------------------------------------------------------
+  #                                  Microservice - Client
+  #---------------------------------------------------------------------------------------------------
+  msvc-client-db:
+    container_name: "msvc-client-db"
+    image: postgres:16
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "msvc_client"
+      POSTGRES_PASSWORD: "1234"
+    volumes:
+      - postgres_client_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d msvc_client"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - msvc_challenge
+
+  msvc-client:
+    container_name: "msvc-client"
+    build: ./microservice-client
+    ports:
+      - "8090:8090"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8090/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      DATABASE_USERNAME: "postgres"
+      DATABASE_PASSWORD: "1234"
+    depends_on:
+      msvc-config-server:
+        condition: service_healthy
+      msvc-discovery-server:
+        condition: service_healthy
+      msvc-client-db:
+        condition: service_healthy
+    networks:
+      - msvc_challenge
+
+
+  #---------------------------------------------------------------------------------------------------
+  #                                   Microservice - BFF
+  #---------------------------------------------------------------------------------------------------
+  msvc-bff:
+    container_name: "msvc-bff"
+    build: ./microservice-bff
+    ports:
+      - "9091:9091"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9091/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    depends_on:
+      msvc-config-server:
+        condition: service_healthy
+      msvc-discovery-server:
+        condition: service_healthy
+      msvc-product:
+        condition: service_healthy
+      msvc-client:
+        condition: service_healthy
+    networks:
+      - msvc_challenge
+
+  #---------------------------------------------------------------------------------------------------
+  #                                   Microservice - API Gateway
+  #---------------------------------------------------------------------------------------------------
+  msvc-api-gateway:
+    container_name: "msvc-api-gateway"
+    build: ./gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      msvc-config-server:
+        condition: service_healthy
+      msvc-discovery-server:
+        condition: service_healthy
+      msvc-product:
+        condition: service_healthy
+      msvc-client:
+        condition: service_healthy
+      msvc-bff:
+        condition: service_healthy
+    networks:
+      - msvc_challenge
+
+volumes:
+  postgres_product_data:
+  postgres_client_data:
+
+networks:
+  msvc_challenge:
+      driver: bridge

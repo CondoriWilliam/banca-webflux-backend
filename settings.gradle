@@ -1,0 +1,8 @@
+rootProject.name = 'microservicios-webflux'
+
+include 'ms-client'
+include 'ms-product'
+include 'ms-bff'
+include 'ms-discovery-server'
+include 'ms-config-server'
+include 'ms-api-gateway'

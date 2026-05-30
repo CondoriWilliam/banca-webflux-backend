@@ -1,0 +1,2 @@
+ALTER TABLE client
+ALTER COLUMN document_type TYPE VARCHAR;
