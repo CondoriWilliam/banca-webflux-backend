@@ -43,10 +43,17 @@ cd microservicios-webflux
 ```
 
 ### 2. Levantar el Config Server
-✅ms-config-server (run)
+✅ms-config-server
 
 
 ### 3. Levantar el Discovery Server (Eureka)
-✅ms-discovery-server (run)
+✅ms-discovery-server
+
+### 4. Levantar el Clientes, Products, BFF, Api-Gateway
+✅ms-client              
+✅ms-product            
+✅ms-bff                
+✅ms-api-gateway/    
+
 
 
