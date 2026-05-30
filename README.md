@@ -49,7 +49,7 @@ cd microservicios-webflux
 ### 3. Levantar el Discovery Server (Eureka)
 ✅ms-discovery-server
 
-### 4. Levantar el Clientes, Products, BFF, Api-Gateway
+### 4. Levantar Clientes, Products, BFF, Api-Gateway
 ✅ms-client              
 ✅ms-product            
 ✅ms-bff                
