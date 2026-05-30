@@ -35,8 +35,8 @@ public class ProductHandler {
     }
 
     public Mono<ServerResponse> getAll(ServerRequest request){
-        return productService.
-                findAll()
+        return productService
+                .findAll()
                 .collectList()
                 .flatMap(list -> list.isEmpty()
                         ? ServerResponse.noContent().build()
@@ -68,12 +68,6 @@ public class ProductHandler {
                 .delete(id)
                 .then(ServerResponse.noContent().build());
     }
-
-//    @RequestMapping("/client/{id}")
-//    public Flux<Product> findByClientId(@PathVariable String id) {
-//        return productService
-//                .findByClientId(id);
-//    }
 
     public Mono<ServerResponse> findByClientId(ServerRequest request) {
         String clientId = request.pathVariable("id");

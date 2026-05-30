@@ -26,7 +26,7 @@ public class GlobalErrorHandler implements WebExceptionHandler {
 
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-        System.out.println("\nHOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA \n");
+
         HttpStatus status = resolveStatus(ex);
 
         ApiErrorResponse error = new ApiErrorResponse(

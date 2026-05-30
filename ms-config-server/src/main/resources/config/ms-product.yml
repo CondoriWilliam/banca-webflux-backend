@@ -3,17 +3,11 @@ spring:
     name: ms-product
   r2dbc:
     url: r2dbc:postgresql://localhost:5432/msvc-product-wbf
-    username: postgres #${DATABASE_USERNAME}
-    password: 1234 #${DATABASE_PASSWORD}
+    username: postgres
+    password: 1234
 
 server:
   port: 8083
-
-#logging:
-#  level:
-#    org.springframework.r2dbc: DEBUG
-#    io.r2dbc.postgresql.QUERY: DEBUG
-#    io.r2dbc.postgresql.PARAM: DEBUG
 
 eureka:
   instance:

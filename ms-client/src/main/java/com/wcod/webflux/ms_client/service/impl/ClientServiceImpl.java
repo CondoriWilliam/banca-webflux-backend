@@ -67,9 +67,6 @@ public class ClientServiceImpl implements ClientService {
                 .map(clientExisting -> ClientMapper.toEntityUpdate(clientExisting, clientRequest))
                 .flatMap(clientRepository::save)
                 .map(ClientMapper::toResponse)
-//                .doOnError(error -> log.error("Error updating client: {}", error.getMessage()))
-//                .onErrorMap(e -> !(e instanceof RuntimeException),
-//                        e -> new ServiceException("\nError updating client: ", e));
                 .onErrorMap(ex -> {
                     Throwable throwable = mapDuplicateConstraint(
                             ex,

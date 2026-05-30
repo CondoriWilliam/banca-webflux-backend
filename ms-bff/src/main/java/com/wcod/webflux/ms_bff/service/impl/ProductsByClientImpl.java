@@ -30,10 +30,11 @@ public class ProductsByClientImpl implements ProductsByClientService {
         this.clientWebProduct = clientWebProduct;
     }
 
+    // Via codigo
     @Override
     @CircuitBreaker(name = "productsByClient", fallbackMethod = "productsByClientFallback")
     @Retry(name = "productsByClient")
-    //@TimeLimiter(name = "productsByClient")
+    @TimeLimiter(name = "productsByClient")
     public Mono<ProductsByClientResponse> getAllProductsByClient(String id) {
 
         Mono<ClientResponse> client = clientWebClient
