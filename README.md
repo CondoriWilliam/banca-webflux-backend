@@ -53,7 +53,7 @@ cd microservicios-webflux
 ✅ms-client              
 ✅ms-product            
 ✅ms-bff                
-✅ms-api-gateway/    
+✅ms-api-gateway    
 
 
 
