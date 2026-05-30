@@ -1,7 +1,7 @@
 # 🌐 Microservicios con Spring Boot WebFlux
 
 ## 📌 Digrama de alto nivel
-
+<img width="981" height="772" alt="Image" src="https://github.com/user-attachments/assets/66284f9d-8396-4bae-9766-de5715c3f59b" />
 
 ## 📌 Requisitos
 - **Java 25**
