@@ -23,13 +23,13 @@ Este proyecto está compuesto por varios subproyectos:
 
 ## 📂 Estructura del proyecto
 microservicios-webflux/
-├── ms-client/
-├── ms-product/
-├── ms-bff/
-├── ms-discovery-server/
-├── ms-config-server/
-├── ms-api-gateway/
-└── build.gradle
+ ├── ms-client/              # Microservicio cliente
+ ├── ms-product/             # Microservicio productos
+ ├── ms-bff/                 # Backend For Frontend
+ ├── ms-discovery-server/    # Eureka Server
+ ├── ms-config-server/       # Config Server
+ ├── ms-api-gateway/         # API Gateway
+ └── build.gradle            # Configuración raíz de Gradle
 
 ## ▶️ Cómo ejecutar
 
