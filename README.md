@@ -23,7 +23,8 @@ Este proyecto está compuesto por varios subproyectos:
 
 ## 📂 Estructura del proyecto
 
-microservicios-webflux
+microservicios-webflux/
+
  ├── ms-client/              
  ├── ms-product/             
  ├── ms-bff/                 
