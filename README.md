@@ -43,12 +43,10 @@ cd microservicios-webflux
 ```
 
 ### 2. Levantar el Config Server
-```bash
 ✅ms-config-server (run)
-```
+
 
 ### 3. Levantar el Discovery Server (Eureka)
-```bash
 ✅ms-discovery-server (run)
-```
+
 
