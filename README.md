@@ -39,13 +39,13 @@ microservicios-webflux/
 Primero descarga el proyecto en tu máquina local:
 ```bash
 git clone https://github.com/usuario/microservicios-webflux.git
-cd microservicios-webflux
+cd microservicios-webflux```
 
 ### 2. Levantar el Config Server
 ```bash
-ms-config-server
+ms-config-server```
 
 ### 3. Levantar el Discovery Server (Eureka)
 ```bash
-ms-discovery-server
+ms-discovery-server```
 
